@@ -2,33 +2,39 @@
 
 BinaryTree::BinaryTree()
 {
-    Node head(0, nullptr, nullptr);
-    _head = &head;
+    _head = new Node(0, nullptr, nullptr, nullptr);
 }
 
 BinaryTree::BinaryTree(int headVal)
 {
-    Node head(headVal, nullptr, nullptr);
-    _head = &head;
+    _head = new Node(headVal, nullptr, nullptr, nullptr);
 }
 
 void BinaryTree::insert(int val)
 {
+    Node *insertNode = new Node(val, nullptr, nullptr, nullptr);
     Node *temp = _head;
-    Node newNode(val, nullptr, nullptr);
 
     while (temp != nullptr) {
-        if (val >= temp->getData()) {
-            temp = temp->getRight();
-        } else if (val <= temp->getData()) {
+        if (val < temp->getData()) {
+            if (temp->getLeft() == nullptr) {
+                temp->setLeft(insertNode);
+                insertNode->setParent(temp);
+                break;
+            }
             temp = temp->getLeft();
+        } else if (val > temp->getData()) {
+            if (temp->getRight() == nullptr) {
+                temp->setRight(insertNode);
+                insertNode->setParent(temp);
+                break;
+            }
+            temp = temp->getRight();
         }
     }
-
-    temp = &newNode;
 }
 
 void BinaryTree::print()
 {
-    //std::cout << "Head = " << _head->getData() << "\n" << "Right = " << _head->getRight()->getData() << std::endl;
+    std::cout << _head->getLeft()->getRight()->getData() << std::endl;
 }
