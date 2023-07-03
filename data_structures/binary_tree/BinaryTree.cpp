@@ -23,7 +23,7 @@ void BinaryTree::insert(int val)
                 break;
             }
             temp = temp->getLeft();
-        } else if (val > temp->getData()) {
+        } else if (val >= temp->getData()) {
             if (temp->getRight() == nullptr) {
                 temp->setRight(insertNode);
                 insertNode->setParent(temp);
@@ -36,5 +36,14 @@ void BinaryTree::insert(int val)
 
 void BinaryTree::print()
 {
-    std::cout << _head->getLeft()->getRight()->getData() << std::endl;
+    inorderTreeWalkPrint(_head);
+}
+
+void BinaryTree::inorderTreeWalkPrint(Node *n)
+{
+    if (n != nullptr) {
+        inorderTreeWalkPrint(n->getLeft());
+        std::cout << n->getData() << std::endl;
+        inorderTreeWalkPrint(n->getRight());
+    }
 }
