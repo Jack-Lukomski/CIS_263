@@ -10,6 +10,11 @@ BinaryTree::BinaryTree(int headVal)
     _head = new Node(headVal, nullptr, nullptr, nullptr);
 }
 
+Node *BinaryTree::getHead() 
+{
+    return _head;
+}
+
 void BinaryTree::insert(int val)
 {
     Node *insertNode = new Node(val, nullptr, nullptr, nullptr);
@@ -43,7 +48,7 @@ void BinaryTree::inorderTreeWalkPrint(Node *n)
 {
     if (n != nullptr) {
         inorderTreeWalkPrint(n->getLeft());
-        std::cout << n->getData() << std::endl;
+        std::cout << n->getData() << " ";
         inorderTreeWalkPrint(n->getRight());
     }
 }

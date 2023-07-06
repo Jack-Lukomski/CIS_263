@@ -9,6 +9,7 @@ private:
 public:
     BinaryTree();
     BinaryTree(int headVal);
+    Node *getHead();
     void insert(int val);
     void print();
 };
