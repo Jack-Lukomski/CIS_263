@@ -9,6 +9,15 @@ RB_Node::RB_Node(int data, RB_Node *parent, RB_Node *right, RB_Node *left, RB_Co
     _color = color;
 }
 
+RB_Node::RB_Node(RB_Node *parent, RB_Node *right, RB_Node *left, RB_Color color)
+{
+    _parent = parent;
+    _right = right;
+    _left = left;
+    _color = color;
+    _data = 0;
+}
+
 int RB_Node::getData()
 {
     return _data;

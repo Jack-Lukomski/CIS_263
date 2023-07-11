@@ -16,6 +16,7 @@ private:
     RB_Color _color;
 public:
     RB_Node(int data, RB_Node *parent, RB_Node *right, RB_Node *left, RB_Color color);
+    RB_Node(RB_Node *parent, RB_Node *right, RB_Node *left, RB_Color color);
 
     int getData();
     RB_Color getColor();
