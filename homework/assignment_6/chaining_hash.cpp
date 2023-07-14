@@ -9,9 +9,9 @@
 class hash_table
 {
 private:
-    int                         _tblSize; // length of the table
+    int                      _tblSize; // length of the table
     std::vector<std::list<int> > _tbl; // vector of lists that contain numbers
-    int                         _tblCt; // how many elemnts are in the table
+    int                        _tblCt; // how many elemnts are in the table
 
     int hash_function(int x)
     {
@@ -61,16 +61,17 @@ public:
 
 };
 
+static const int input[] = {4371, 1323, 6173, 4199, 4344, 9679, 1989};
+
 int main (void)
 {
     hash_table htbl(10);
 
-    htbl.insert(89);
-    htbl.insert(89);
-    htbl.insert(9);
-    htbl.print_tbl();
+    for (const auto & num: input) {
+        htbl.insert(num);
+    }
 
-    std::cout << htbl.search(9) << std::endl;
+    htbl.print_tbl();
 
     return 0;
 }
