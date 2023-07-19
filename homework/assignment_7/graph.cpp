@@ -6,9 +6,27 @@ template <typename T>
 class Graph 
 {
   private:
-    int _vCt;
-    std::vector<T> _v;
-    std::vector<std::vector<int> > _e;
+    int                          _vCt; // num verticies
+    std::vector<T>                 _v; // vector of verticies/nodes
+    std::vector<std::vector<int> > _e; // edges of verticies
+
+    int noSuccessors(std::vector<T> vCpy, std::vector<std::vector<int> > eCpy)
+    {
+        for (int i = 0; i < vCpy.size(); ++i) {
+            bool isEdge = false;
+            for (int j = 0; j < vCpy.size(); ++j) {
+                if (eCpy[i][j] != 0) {
+                    isEdge = true;
+                    break;
+                }
+            }
+            if (!isEdge) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
   public:
     Graph(std::vector<T> vertcies) {
         _vCt = vertcies.size();
@@ -28,7 +46,7 @@ class Graph
         _e[r][c] = weight;
     }
     
-    void printTopography() 
+    void printTopography()
     {
         std::cout << "   ";
         for (const auto& vertex : _v) {
@@ -44,6 +62,36 @@ class Graph
             std::cout << std::endl;
         }
     }
+
+    void topologicalSort()
+    {
+        std::vector<T> vCpy = _v;
+        std::vector<std::vector<int> > eCpy = _e;
+        std::vector<T> sortedList;
+
+        while (vCpy.size() > 0) {
+            int vIndex = noSuccessors(vCpy, eCpy);
+
+            if (vIndex == -1) {
+                throw std::runtime_error("Cannot have a cycle");
+            }
+
+            sortedList.push_back(vCpy[vIndex]);
+
+            vCpy.erase(vCpy.begin() + vIndex);
+            eCpy.erase(eCpy.begin() + vIndex);
+            for (int i = 0; i < eCpy.size(); ++i) {
+                eCpy[i].erase(eCpy[i].begin() + vIndex);
+            }
+        }
+
+        std::reverse(sortedList.begin(), sortedList.end());
+
+        std::cout << "\n";
+        for (const auto & i: sortedList) {
+            std::cout << i << ", ";
+        }
+    }
   
 };
 
@@ -55,10 +103,21 @@ int main()
     for (const auto & i: list) {
         v.push_back(i);
     }
-    
-    Graph<char> g(v);
-    g.addConnection('s', 'A', 1);
+
+    std::vector<int> v2;
+    for (int i = 0; i < 6; ++i) {
+        v2.push_back(i);
+    }
+
+    Graph<int> g(v2);
+    g.addConnection(5, 0, 1);
+    g.addConnection(5, 2, 1);
+    g.addConnection(2, 3, 1);
+    g.addConnection(3, 1, 1);
+    g.addConnection(4, 1, 1);
+    g.addConnection(4, 0, 1);
     g.printTopography();
+    g.topologicalSort();
 
     
     return 0;
