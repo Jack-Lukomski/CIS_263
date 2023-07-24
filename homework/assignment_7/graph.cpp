@@ -85,9 +85,9 @@ class Graph
             }
         }
 
-        std::reverse(sortedList.begin(), sortedList.end());
+        // std::reverse(sortedList.begin(), sortedList.end());
 
-        std::cout << "\n";
+        std::cout << "Graph Topologicly Sorted:\n";
         for (const auto & i: sortedList) {
             std::cout << i << ", ";
         }
@@ -104,21 +104,43 @@ int main()
         v.push_back(i);
     }
 
-    std::vector<int> v2;
-    for (int i = 0; i < 6; ++i) {
-        v2.push_back(i);
-    }
+    Graph<char> g(v);
 
-    Graph<int> g(v2);
-    g.addConnection(5, 0, 1);
-    g.addConnection(5, 2, 1);
-    g.addConnection(2, 3, 1);
-    g.addConnection(3, 1, 1);
-    g.addConnection(4, 1, 1);
-    g.addConnection(4, 0, 1);
+    g.addConnection('s', 'A', 1);
+    g.addConnection('s', 'D', 4);
+    g.addConnection('s', 'G', 6);
+
+    g.addConnection('A', 'B', 2);
+    g.addConnection('A', 'E', 2);
+
+    g.addConnection('D', 'A', 3);
+    g.addConnection('D', 'E', 3);
+
+    g.addConnection('G', 'D', 2);
+    g.addConnection('G', 'E', 1);
+    g.addConnection('G', 'H', 6);
+
+    g.addConnection('B', 'C', 2);
+
+    g.addConnection('E', 'C', 2);
+    g.addConnection('E', 'F', 3);
+    g.addConnection('E', 'I', 3);
+
+    g.addConnection('H', 'E', 2);
+    g.addConnection('H', 'I', 6);
+
+    g.addConnection('C', 't', 4);
+
+    g.addConnection('F', 'C', 1);
+    g.addConnection('F', 't', 3);
+
+    g.addConnection('I', 'F', 1);
+    g.addConnection('I', 't', 4);
+
+    std::cout << "Graph's Adjacency Matrix: \n";
     g.printTopography();
+    std::cout << "Printing Top Sort: \n";
     g.topologicalSort();
-
     
     return 0;
 }
